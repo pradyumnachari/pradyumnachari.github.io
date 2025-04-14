@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NANDA: The Protocol for the Internet of AI Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #a51c30;
+      --primary-dark: #8a1f1c;
+      --primary-light: #f8e1e3;
+      --light-gray: #f7f7f9;
+      --dark-gray: #333;
+      --white: #fff;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.75;
+      color: var(--dark-gray);
+      background-color: var(--white);
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-top: 4rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--primary);
+    }
+    
+    h3 {
+      color: var(--primary-dark);
+      font-size: 1.8rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    h4 {
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+    
+    ul, ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    li {
+      margin-bottom: 0.5rem;
+    }
+    
+    /* Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.1);
+      opacity: 0.1;
+    }
+    
+    .header-content {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      text-align: center;
+      padding: 0 2rem;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      letter-spacing: 2px;
+    }
+    
+    header h1 {
+      font-size: 4.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    header .subtitle {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .scroll-down {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+      }
+      40% {
+        transform: translateY(-20px) translateX(-50%);
+      }
+      60% {
+        transform: translateY(-10px) translateX(-50%);
+      }
+    }
+    
+    .scroll-down svg {
+      width: 40px;
+      height: 40px;
+      fill: var(--white);
+    }
+    
+    /* Content */
+    .content {
+      padding: 5rem 0;
+    }
+    
+    .intro {
+      font-size: 1.3rem;
+      line-height: 1.9;
+      margin-bottom: 3rem;
+      color: #555;
+    }
+    
+    .intro strong {
+      color: var(--primary);
+    }
+    
+    .feature-box {
+      background: linear-gradient(135deg, var(--white) 0%, var(--light-gray) 100%);
+      border-left: 6px solid var(--primary);
+      padding: 2.5rem;
+      margin: 3rem 0;
+      border-radius: 0 12px 12px 0;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-box h3 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+    
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin: 3rem 0;
+    }
+    
+    /* Comparison Table */
+    .comparison-section {
+      margin: 5rem 0;
+      padding: 3rem 0;
+      background-color: var(--light-gray);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .comparison-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(165, 28, 48, 0.03) 0%, rgba(165, 28, 48, 0.08) 100%);
+      z-index: 0;
+    }
+    
+    .comparison-section .container {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 2rem 0;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .comparison-table th {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      text-align: left;
+      padding: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .comparison-table th:first-child {
+      border-top-left-radius: 12px;
+    }
+    
+    .comparison-table th:last-child {
+      border-top-right-radius: 12px;
+    }
+    
+    .comparison-table td {
+      border-bottom: 1px solid #eee;
+      padding: 1.5rem;
+      font-size: 1rem;
+      vertical-align: top;
+    }
+    
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .comparison-table tr:hover {
+      background-color: rgba(165, 28, 48, 0.03);
+    }
+    
+    /* Timeline */
+    .timeline-section {
+      padding: 5rem 0;
+      background-color: var(--white);
+      position: relative;
+    }
+    
+    .timeline {
+      margin: 3rem 0;
+      position: relative;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background-color: var(--primary-light);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+      border-radius: 2px;
+    }
+    
+    .timeline-item {
+      padding: 1rem 2rem;
+      position: relative;
+      background-color: inherit;
+      width: 46%;
+      margin-bottom: 3rem;
+    }
+    
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background-color: var(--white);
+      border: 4px solid var(--primary);
+      top: 15px;
+      border-radius: 50%;
+      z-index: 1;
+      box-shadow: 0 0 0 6px rgba(165, 28, 48, 0.1);
+      transition: var(--transition);
+    }
+    
+    .timeline-item:hover::after {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 10px rgba(165, 28, 48, 0.1);
+    }
+    
+    .left {
+      left: 0;
+    }
+    
+    .right {
+      left: 50%;
+    }
+    
+    .left::after {
+      right: -16px;
+    }
+    
+    .right::after {
+      left: -16px;
+    }
+    
+    .timeline-content {
+      padding: 2rem;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    .timeline-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    
+    .timeline-content h4 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 5rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.05);
+      opacity: 0.05;
+    }
+    
+    .cta-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .cta-section h2 {
+      color: var(--white);
+      margin-top: 0;
+    }
+    
+    .cta-section h2::after {
+      background: var(--white);
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .cta-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      background-color: var(--white);
+      color: var(--primary);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      transition: var(--transition);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cta-button:hover {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      text-align: center;
+      padding: 3rem 0;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      text-align: left;
+      margin-bottom: 3rem;
+    }
+    
+    .footer-column h4 {
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-column h4::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+    }
+    
+    .footer-column p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    
+    .footer-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .footer-links a:hover {
+      color: var(--white);
+      padding-left: 5px;
+    }
+    
+    .copyright {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .copyright p {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+    }
+    
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Card Styles */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+    
+    .card-header h3 {
+      margin: 0;
+      color: var(--white);
+      position: relative;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .card-body p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Particle Animation */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    /* Responsive Styles */
+    @media screen and (max-width: 992px) {
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      header h1 {
+        font-size: 3.5rem;
+      }
+    }
+    
+    @media screen and (max-width: 768px) {
+      h1 {
+        font-size: 2.8rem;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .timeline::before {
+        left: 31px;
+      }
+      
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+      
+      .timeline-item::after {
+        left: 20px;
+      }
+      
+      .left::after, .right::after {
+        left: 20px;
+      }
+      
+      .right {
+        left: 0%;
+      }
+      
+      header {
+        height: 90vh;
+      }
+      
+      header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .footer-column h4::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      header h1 {
+        font-size: 2.2rem;
+      }
+      
+      header .subtitle {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Animation Container -->
+  <div class="particles-container" id="particles-js"></div>
+  
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo">MIT DECENTRALIZED AI</div>
+      <h1>NANDA: Networked Agents and Decentralized Architecture</h1>
+      <p class="subtitle">Pioneering the Internet of AI Agents</p>
+      <a href="#content" class="cta-button">Discover More</a>
+    </div>
+    <div class="scroll-down" id="scroll-down">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 21l-12-18h24z"/>
+      </svg>
+    </div>
+  </header>
+  
+  <div id="content" class="content">
+    <div class="container">
+      <h2 class="fade-in">The Dawn of the AI Agent Internet</h2>
+
+    <!-- Added Hero Image -->
+    <div class="hero-image fade-in" style="max-width: 1000px; margin: 2rem auto; height: auto;">
+        <img src="images/world_of_agents.png" alt="Network of AI agents represented by blue nodes with orange connection paths" style="width: 100%; height: auto;" />
+    </div>
+
+      <p class="intro fade-in">In an era where artificial intelligence is surging toward Artificial General Intelligence (AGI), a new digital landscape is emerging — one defined by billions of specialized AI agents collaborating seamlessly within decentralized networks. <strong>NANDA</strong> (Networked Agents and Decentralized Architecture) lays the foundational infrastructure that will enable these agents to discover, authenticate, interact, and build trust with each other across organizational boundaries.</p>
+      
+      <div class="cards-container">
+        <div class="card fade-in">
+          <div class="card-header">
+            <h3>Anthropic's MCP</h3>
+          </div>
+          <div class="card-body">
+            <p>Pioneering protocols like Anthropic's Model Context Protocol (MCP) have established a common schema for AI agent-to-tool interaction, representing crucial first steps toward interconnected AI ecosystems.</p>
+          </div>
+        </div>
+        
+        <div class="card fade-in">
+          <div class="card-header">
+            <h3>Google's A2A</h3>
+          </div>
+          <div class="card-body">
+            <p>Google's Agent-to-Agent (A2A) provides standardized ways for agents to collaborate directly, marking significant progress in defining how agents communicate with each other.</p>
+          </div>
+        </div>
+        
+        <div class="card fade-in">
+          <div class="card-header">
+            <h3>NANDA</h3>
+          </div>
+          <div class="card-body">
+            <p>NANDA builds upon these foundations by focusing not just on communication protocols, but on the entire infrastructure needed for a scalable, trustworthy network of AI agents.</p>
+          </div>
+        </div>
+      </div>
+      
+      <p class="fade-in">Just as the World Wide Web required not only HTTP for communication but also DNS for discovery, browsers for interaction, and security standards for trust, the Internet of AI Agents needs a comprehensive architecture addressing discovery, verification, reputation, and commerce.</p>
+    
+      <h2 class="fade-in">The Evolution of AI Agent Protocols</h2>
+    <!-- Added Hero Image -->
+    <div class="hero-image fade-in" style="max-width: 1000px; margin: 2rem auto; height: auto;">
+        <img src="images/nanda.png" alt="Network of AI agents represented by blue nodes with orange connection paths" style="width: 100%; height: auto;" />
+    </div>
+      <p class="fade-in">The progression from mainframe computing to the modern internet has been driven by key infrastructural breakthroughs. AI is following a similar evolutionary path:</p>
+      <ul class="fade-in">
+        <li><strong>Cloud APIs to Edge AI:</strong> Centralized models have given way to distributed edge computing.</li>
+        <li><strong>Agentic AI:</strong> Early trusted agents operated within known topologies.</li>
+        <li><strong>Decentralized AI:</strong> The future belongs to trustless wisdom economies where agents work across distributed networks.</li>
+      </ul>
+      <p class="fade-in">NANDA represents the crucial next step — not just enabling basic agent-to-agent communication (a role filled by MCP and A2A), but providing a complete ecosystem of discovery, authentication, security, and traceability services necessary for decentralized collaboration at scale.</p>
+      
+      <h2 class="fade-in">Beyond Communication: A Complete Architectural Vision</h2>
+      <!-- Added Hero Image -->
+    <div class="hero-image fade-in" style="max-width: 1000px; margin: 2rem auto; height: auto;">
+        <img src="images/nanda_arch.png" alt="Network of AI agents represented by blue nodes with orange connection paths" style="width: 100%; height: auto;" />
+    </div>
+      <p class="fade-in">What sets NANDA apart is its holistic approach to building infrastructure for decentralized AI collaboration. While existing protocols define how agents exchange information, NANDA provides the complete architectural stack needed for a truly interconnected agent ecosystem that can operate across organizational boundaries.</p>
+      
+      <div class="two-column">
+        <div class="fade-in">
+          <h3>The Complete Infrastructure Stack</h3>
+          <p>NANDA bridges the gap between basic communication protocols and a full-scale, decentralized ecosystem through a multi-layered approach:</p>
+          
+          <h4>Protocol Layer</h4>
+          <p>Enhances and extends existing protocols to support complex, dynamic agent-to-agent interactions across organizational boundaries.</p>
+          
+          <h4>Infrastructure Layer</h4>
+          <ul>
+            <li><strong>Registries:</strong> Centralized and decentralized directories for discovering agents, resources, and tools</li>
+            <li><strong>Identity Systems:</strong> Cryptographic verification for secure, trusted agent interactions</li>
+            <li><strong>Interaction Database:</strong> Infrastructure for recording, referencing, and tracing agent interactions over time</li>
+            <li><strong>Authentication Systems:</strong> Robust mechanisms for verifying agent identity and capabilities</li>
+          </ul>
+          
+          <h4>Developer Tools & Applications</h4>
+          <p>Provides SDKs, testing frameworks, and client/server examples for rapid application development, ensuring enterprises and developers can seamlessly integrate NANDA into their workflows.</p>
+        </div>
+        
+        <div class="fade-in">
+          <h3>Key Differentiators</h3>
+          <ul>
+            <li><strong>Explicit Focus on Decentralization:</strong> While other systems operate in centralized environments, NANDA is architected from the ground up to thrive in trustless, decentralized networks.</li>
+            <li><strong>Large-Scale Infrastructure:</strong> Designed for the future of AI where billions of agents interact across public and private networks, with robust registries, discovery mechanisms, and verifiable traceability.</li>
+            <li><strong>Strong Academic Research Foundation:</strong> Driven by groundbreaking work at MIT in decentralized society, privacy-preserving machine learning, and data markets, bringing research-based rigor to its design.</li>
+            <li><strong>Prioritization of Trust and Accountability:</strong> With an integrated "Trace" system and comprehensive identity verification mechanisms, NANDA builds trust between agents, ensuring transparent and accountable interactions.</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="fade-in">By addressing these interconnected challenges holistically, NANDA provides the infrastructure needed to transform isolated AI systems into a true internet of AI agents—just as DNS, HTTP, and web browsers together transformed isolated networks into the modern internet.</p>
+    
+      <h2 class="fade-in">Co-optimizing the Agent Ecosystem</h2>
+      <p class="fade-in">A key insight behind NANDA is that the various components of an AI agent ecosystem must be co-optimized rather than developed in isolation. Much as the early web required browsers, servers, and protocols to evolve together, the Internet of AI Agents needs simultaneous progress in multiple dimensions:</p>
+      
+      <div class="feature-box fade-in">
+        <h3>Ecosystem Components</h3>
+        <ul>
+          <li><strong>Discovery mechanisms:</strong> How agents find each other and advertise their capabilities</li>
+          <li><strong>Security protocols:</strong> How agents establish identity and protect sensitive information</li>
+          <li><strong>Interchange formats:</strong> How agents structure and exchange complex information</li>
+          <li><strong>Reputation systems:</strong> How trust and quality are assessed in a decentralized ecosystem</li>
+          <li><strong>Economic incentives:</strong> How value is created and exchanged between agents</li>
+        </ul>
+      </div>
+      
+      <p class="fade-in">By addressing these interconnected challenges as a cohesive system, NANDA aims to accelerate the development of the Internet of AI Agents by orders of magnitude—just as the web's integrated standards accelerated digital transformation beyond what isolated networks could achieve.</p>
+    </div>
+    
+    <!-- Comparison Section with Background -->
+    <div class="comparison-section">
+      <div class="container">
+        <h2 class="fade-in">How NANDA Compares with MCP and Google's A2A</h2>
+        <p class="fade-in">While Anthropic's MCP and Google's A2A protocol have set important precedents in agent-to-agent communications, NANDA provides complementary capabilities that address the additional layers of complexity in truly decentralized environments:</p>
+        <div class="table-container fade-in">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>MCP</th>
+                <th>Google's A2A</th>
+                <th>NANDA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Discovery</strong></td>
+                <td>Client-server capabilities exchanged during connection initialization.</td>
+                <td>Basic agent discovery within controlled environments.</td>
+                <td>Agent registries with persistent DNS-like identities, semantic search, and decentralized discovery mechanisms.</td>
+              </tr>
+              <tr>
+                <td><strong>Security</strong></td>
+                <td>OAuth 2.1 based authentication; assumes secure servers post-registration.</td>
+                <td>Centralized identity management.</td>
+                <td>Certificate-based ownership verification, cryptographic identity signatures, and enhanced compliance through sandboxing and traceability.</td>
+              </tr>
+              <tr>
+                <td><strong>Trust & Accountability</strong></td>
+                <td>Relies on an assumed, largely implicit trust system.</td>
+                <td>Primarily designed for trusted environments.</td>
+                <td>Intrinsic and extrinsic reputation systems paired with immutable logging (Trace) for verifiable agent interactions.</td>
+              </tr>
+              <tr>
+                <td><strong>Architecture Focus</strong></td>
+                <td>Agent-to-tool communication within controlled environments.</td>
+                <td>Agent-to-agent communication primarily within Google's ecosystem.</td>
+                <td>Decentralized infrastructure for agent communication across organizational boundaries.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <h2 class="fade-in">The NANDA Hub: An Open Collaboration Initiative</h2>
+      <p class="fade-in">NANDA isn't just a technology—it's a hub for collaboration, bringing together researchers, developers, and organizations to co-create the Internet of AI Agents. Led by MIT's Decentralized AI Program under Professor Ramesh Raskar, NANDA invites contributions across all components of its architecture.</p>
+      
+      <p class="fade-in">Much as the early web evolved through open standards, NANDA recognizes that no single entity can build the Internet of AI Agents alone. By outlining the critical components needed and providing a framework for integration, NANDA invites experts to contribute their specialized knowledge—whether in security, distributed systems, reputation mechanisms, or agent design.</p>
+      
+      <!-- Timeline Section -->
+      <div class="timeline-section">
+        <h2 class="fade-in">The Path Forward</h2>
+        <p class="fade-in">The MIT Decentralized AI Program is pioneering the NANDA initiative, with a clear development timeline:</p>
+        
+        <div class="timeline">
+          <div class="timeline-item left fade-in">
+            <div class="timeline-content">
+              <h4>Short Term (April 2025)</h4>
+              <p>MVP launch, internal testing, and initial industry partner validation. Focus on establishing core infrastructure components and protocol specifications.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item right fade-in">
+            <div class="timeline-content">
+              <h4>Medium Term</h4>
+              <p>Community building, wider beta testing, and further refinements of the protocol. Expansion of developer tools and integration with existing AI frameworks.</p>
+            </div>
+          </div>
+          
+          <div class="timeline-item left fade-in">
+            <div class="timeline-content">
+              <h4>Long Term</h4>
+              <p>Full ecosystem maturation enabling enterprise-grade adoption and a truly decentralized Internet of AI Agents, with sustainable economic models and governance structures.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="feature-box fade-in">
+        <h3>Join us in this pioneering journey</h3>
+        <p>Whether you're a developer, an enterprise innovator, or a research enthusiast, NANDA represents a transformative opportunity to shape the next generation of collaborative AI.</p>
+      </div>
+      
+      <h3 class="fade-in">Stay Connected & Get Involved</h3>
+      <p class="fade-in">Learn more about NANDA, review our technical specifications, and explore our developer demo. Follow our journey as we build the Internet of AI Agents — one secure, decentralized, and trusted interaction at a time.</p>
+      <p class="fade-in"><strong>Join us.</strong> The future of decentralized AI starts now.</p>
+    </div>
+  </div>
+  
+  <!-- Call To Action Section -->
+  <div class="cta-section">
+    <div class="container">
+      <div class="cta-content">
+        <h2>Join the NANDA Initiative</h2>
+        <p>We invite organizations and developers to join the NANDA initiative through registry hosting, API integration, or open-source contributions. Together, we can build the foundation for the next generation of artificial intelligence.</p>
+        <a href="https://www.media.mit.edu/projects/decentralized-ai/overview/" class="cta-button">Learn More</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h4>About NANDA</h4>
+          <p>NANDA (Networked Agents and Decentralized Architecture) is a comprehensive framework designed to enable the future of decentralized AI agent interaction across organizational boundaries.</p>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">GitHub Repository</a></li>
+            <li><a href="#">Developer Resources</a></li>
+            <li><a href="#">Research Papers</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-column">
+          <h4>Connect With Us</h4>
+          <ul class="footer-links">
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Discord Community</a></li>
+            <li><a href="#">Email Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="copyright">
+        <p>© 2025 NANDA Protocol</p>
+        <p class="mit-credit">Developed by the MIT Decentralized AI Program led by Prof. Ramesh Raskar</p>
+        <p>Contact: dec-ai@media.mit.edu</p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Scripts -->
+  <script>
+    // Scroll to content when arrow is clicked
+    document.getElementById('scroll-down').addEventListener('click', function() {
+      document.getElementById('content').scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // Intersection Observer for fade-in animations
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    fadeElements.forEach(element => {
+      observer.observe(element);
+    });
+    
+    // Alternative animated background effect instead of particles
+    // This creates a dynamic gradient animation for the header and CTA section
+    const createGradientAnimation = () => {
+      const header = document.querySelector('header');
+      const ctaSection = document.querySelector('.cta-section');
+      
+      let hue = 0;
+      
+      const animateGradient = () => {
+        // Keep the red tones within MIT's color scheme (345-360, 0-15 degrees in hue)
+        const baseHue = 355;
+        const hueVariation = 15;
+        const hue1 = (baseHue + Math.sin(hue/50) * hueVariation) % 360;
+        const hue2 = (baseHue + Math.cos(hue/50) * hueVariation) % 360;
+        
+        if (header) {
+          header.style.background = `linear-gradient(135deg, 
+            hsl(${hue1}, 70%, 30%) 0%, 
+            hsl(${hue2}, 80%, 25%) 100%)`;
+        }
+        
+        if (ctaSection) {
+          ctaSection.style.background = `linear-gradient(135deg, 
+            hsl(${hue1}, 70%, 30%) 0%, 
+            hsl(${hue2}, 80%, 25%) 100%)`;
+        }
+        
+        hue += 0.5;
+        requestAnimationFrame(animateGradient);
+      };
+      
+      animateGradient();
+    };
+    
+    // Create animated dots for the header background
+    const createAnimatedDots = () => {
+      const particlesContainer = document.getElementById('particles-js');
+      if (!particlesContainer) return;
+      
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.style.position = 'absolute';
+      canvas.style.top = '0';
+      canvas.style.left = '0';
+      canvas.style.pointerEvents = 'none';
+      particlesContainer.appendChild(canvas);
+      
+      const dots = [];
+      const numDots = 80;
+      
+      // Create dots
+      for (let i = 0; i < numDots; i++) {
+        dots.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+      
+      // Draw and animate dots
+      const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#ffffff';
+        
+        // Draw connections between dots that are close to each other
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.beginPath();
+        for (let i = 0; i < dots.length; i++) {
+          for (let j = i + 1; j < dots.length; j++) {
+            const dx = dots[i].x - dots[j].x;
+            const dy = dots[i].y - dots[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance < 150) {
+              ctx.moveTo(dots[i].x, dots[i].y);
+              ctx.lineTo(dots[j].x, dots[j].y);
+            }
+          }
+        }
+        ctx.stroke();
+        
+        // Draw and update dots
+        dots.forEach(dot => {
+          ctx.globalAlpha = dot.alpha;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // Update position
+          dot.x += dot.vx;
+          dot.y += dot.vy;
+          
+          // Bounce off edges
+          if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+          if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
+        });
+        
+        requestAnimationFrame(animate);
+      };
+      
+      animate();
+      
+      // Handle resize
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    };
+    
+    // Initialize animations
+    createGradientAnimation();
+    createAnimatedDots();
+  </script>
